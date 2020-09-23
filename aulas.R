@@ -198,5 +198,9 @@ tempts = ts(tempts[2], # pegandoa a segunda coluna do objeto criado
   lines(fdeaths5, col = "red")
   lines(fdeaths12, col = "blue")
   lines(fdeathsClean, col = "green")
- legend("topright", legend = c("Orig.", "MA5","MA12", "TSC"), col = c("black", "red", "blue", "green"), lty = 1:2, cex = 0.8)  
+ legend("topright", legend = c("Orig.", "MA5","MA12", "TSC"),
+        col = c("black", "red", "blue", "green"), 
+        lty = 1:2, cex = 0.8)  
+ 
+ 
  
