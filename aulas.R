@@ -528,4 +528,37 @@ tempts = ts(tempts[2], # pegandoa a segunda coluna do objeto criado
   
   # comparando
   plot(prev)
-lines(prev2$mean, col = "red")
+  lines(prev2$mean, col = "red")
+  
+  ########### Metrícas
+  # vamos testar a acuracia de dois modelos
+  library(forecast)
+  library(ggplot2)
+  
+  #conj Treino
+  treino = window(fdeaths, 
+                  start=c(1974,1),
+                  end=c(1977,12))
+  teste = window(fdeaths, 
+                  start=c(1978,1),
+                  end=c(1979,12))
+  # modelo com a regressao lienar
+ modelo1 = tslm(treino~season+trend, data=treino) 
+ #agora vamos prever 24 meses com o modelo
+ prev = forecast(modelo1, h=24)
+autoplot(prev) 
+# modelo com a rede neural
+modelo2 = nnetar(treino)
+prev2 = forecast(modelo2, h=24)
+autoplot(prev2)
+
+### comparando os resultados
+plot(fdeaths)
+lines(teste, col = "green") # resposta esperada
+lines(prev$mean, col = "red") # point forecast do 1º modelo
+lines(prev2$mean, col = "blue") # point forecast do 2º modelo
+legend("topright", legend = c("Teste","Reg.","RNA"), col = c("green","red","blue"), lty = 1:2, cex = 0.8)
+
+#performance
+accuracy(prev, teste )
+accuracy(prev2, teste )
